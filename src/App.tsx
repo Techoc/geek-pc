@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Login from "./pages/Login";
-import Layout from "./pages/layout";
+import Login from "@/pages/Login";
+import Layout from "@/pages/layout";
 
 function App() {
 
