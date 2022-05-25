@@ -10,8 +10,8 @@ function App() {
             <div className="App">
                 <Routes>
                     //创建路由对应关系
-                    <Route path="/" element={<Layout/>}/>
-                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="/layout" element={<Layout/>}/>
                 </Routes>
             </div>
         </BrowserRouter>
