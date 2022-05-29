@@ -16,7 +16,7 @@ class LoginStore {
     makeAutoObservable(this);
   }
 
-  setToken = async ({ mobile, code }: Password) => {
+  login = async ({ mobile, code }: Password) => {
     //调用登录接口
     let res = await http.post("http://geek.itheima.net/v1_0/authorizations", {
       mobile,

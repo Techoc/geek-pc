@@ -1,16 +1,33 @@
-import { Button, Card, Checkbox, Form, Input } from "antd";
+import { Button, Card, Checkbox, Form, Input, message } from "antd";
 import logo from "@/assets/logo.png";
 import "./index.scss";
 import React from "react";
+import { useStore } from "@/store";
+import { useNavigate } from "react-router-dom";
+import { Exception } from "sass";
 
 function Login() {
-  const onFinish = (values: any) => {
+  const { loginStore } = useStore();
+  let navigate = useNavigate();
+  let onFinish = async (values: any) => {
     //values 是表单项里用户输入的数据
     console.log("Success:", values);
-    //TODO 登录
+    //登录
+    try {
+      await loginStore.login({
+        mobile: values.username,
+        code: values.password,
+      });
+      //跳转首页
+      navigate("/layout", { replace: true });
+    } catch (e: any) {
+      message.error(e.response?.data?.message || "登录失败");
+    }
+    //提示用户
+    message.success("登录成功，即将跳转首页");
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  let onFinishFailed = async (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
   return (
