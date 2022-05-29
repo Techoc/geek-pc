@@ -7,6 +7,8 @@ specifiers:
   '@vitejs/plugin-react': ^1.3.0
   antd: ^4.20.6
   axios: ^0.27.2
+  mobx: ^6.6.0
+  mobx-react-lite: ^3.4.0
   prettier: 2.6.2
   react: ^18.0.0
   react-dom: ^18.0.0
@@ -20,6 +22,8 @@ dependencies:
   '@types/node': 17.0.35
   antd: 4.20.6_ef5jwxihqo6n7gxfmzogljlgcm
   axios: 0.27.2
+  mobx: 6.6.0
+  mobx-react-lite: 3.4.0_zjzbed4ey2pl6an3m4umzh4gbq
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
   react-hot-toast: 2.2.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -1029,6 +1033,28 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.52.0
+    dev: false
+
+  /mobx-react-lite/3.4.0_zjzbed4ey2pl6an3m4umzh4gbq:
+    resolution: {integrity: sha512-bRuZp3C0itgLKHu/VNxi66DN/XVkQG7xtoBVWxpvC5FhAqbOCP21+nPhULjnzEqd7xBMybp6KwytdUpZKEgpIQ==}
+    peerDependencies:
+      mobx: ^6.1.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      mobx: 6.6.0
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+    dev: false
+
+  /mobx/6.6.0:
+    resolution: {integrity: sha512-MNTKevLH/6DShLZcmSL351+JgiJPO56A4GUpoiDQ3/yZ0mAtclNLdHK9q4BcQhibx8/JSDupfTpbX2NZPemlRg==}
     dev: false
 
   /moment/2.29.3:
