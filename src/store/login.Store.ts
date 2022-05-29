@@ -1,7 +1,7 @@
 //登录模块
 // 登录模块
 import { makeAutoObservable } from "mobx";
-import { http } from "@/utils";
+import { http, setToken } from "@/utils";
 
 interface Password {
   mobile: number;
@@ -24,6 +24,7 @@ class LoginStore {
     });
     //存入token
     this.token = res.data.token;
+    setToken(this.token);
   };
 
   // 登录
