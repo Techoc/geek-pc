@@ -9,7 +9,7 @@ interface Password {
 }
 
 class LoginStore {
-  public token: String = "";
+  public token: string = "";
 
   constructor() {
     //响应式

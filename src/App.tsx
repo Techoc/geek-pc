@@ -2,6 +2,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "@/pages/Login";
 import Layout from "@/pages/layout";
 import { AuthComponent } from "@/components/AuthComponent";
+import "./App.scss";
+import Home from "@/pages/Home";
+import Article from "@/pages/Article";
+import Publish from "@/pages/Publish";
 
 function App() {
   return (
@@ -17,7 +21,11 @@ function App() {
                 <Layout />
               </AuthComponent>
             }
-          />
+          >
+            <Route index element={<Home />} />
+            <Route path="article" element={<Article />} />
+            <Route path="publish" element={<Publish />} />
+          </Route>
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>
@@ -25,4 +33,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

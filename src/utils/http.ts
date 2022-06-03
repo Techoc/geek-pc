@@ -1,15 +1,23 @@
 //封装axios
 //实例化 请求拦截器 响应拦截器
 
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { getToken } from "@/utils/token";
 
 const http = axios.create({
-  baseURL: "https://geek.itheima.net/v1_0",
+  baseURL: "http://geek.itheima.net/v1_0",
   timeout: 5000,
 });
+
 // 添加请求拦截器
 http.interceptors.request.use(
-  (config) => {
+  (config: AxiosRequestConfig) => {
+    // if not login add token
+    const token = getToken();
+    if (token) {
+      // @ts-ignore
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

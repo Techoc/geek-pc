@@ -2,7 +2,7 @@
 
 const key = 'pc-token'
 
-const setToken = (token: String) => {
+const setToken = (token: string) => {
     return window.localStorage.setItem(key, token)
 }
 
