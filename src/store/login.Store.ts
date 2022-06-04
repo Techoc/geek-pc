@@ -1,7 +1,7 @@
 //登录模块
 // 登录模块
 import { makeAutoObservable } from "mobx";
-import { http, setToken } from "@/utils";
+import { getToken, http, removeToken, setToken } from "@/utils";
 
 interface Password {
   mobile: number;
@@ -9,7 +9,7 @@ interface Password {
 }
 
 class LoginStore {
-  public token: string = "";
+  public token: string = getToken() || "";
 
   constructor() {
     //响应式
@@ -27,7 +27,10 @@ class LoginStore {
     setToken(this.token);
   };
 
-  // 登录
+  logout = () => {
+    this.token = "";
+    removeToken();
+  };
 }
 
 export default LoginStore;
