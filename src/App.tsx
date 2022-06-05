@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { HistoryRouter, history } from "./utils/history";
 import Login from "@/pages/Login";
 import Layout from "@/pages/layout";
 import { AuthComponent } from "@/components/AuthComponent";
@@ -10,7 +11,7 @@ import Publish from "@/pages/Publish";
 function App() {
   return (
     //路由配置
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <div className="App">
         <Routes>
           //创建路由对应关系
@@ -29,7 +30,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
