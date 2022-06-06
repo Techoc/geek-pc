@@ -20,7 +20,7 @@ const GeekLayout = () => {
     userStore.getUserInfo();
   }, [userStore]);
 
-  //确定推出
+  //确定退出
   let navigate = useNavigate();
   let onConfirm = () => {
     //退出登录 删除token 跳回到登录
