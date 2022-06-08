@@ -87,6 +87,12 @@ const Article = () => {
         });
     };
 
+    let pageChange = (page: any) => {
+        setParams({
+            ...params,
+            page,
+        });
+    };
     const columns = [
         {
             title: "封面",
@@ -209,6 +215,12 @@ const Article = () => {
                     rowKey="id"
                     columns={columns}
                     dataSource={articleDate.list}
+                    pagination={{
+                        position: ['bottomCenter'],
+                        pageSize: params.per_page,
+                        total: articleDate.count,
+                        onChange: pageChange,
+                    }}
                 />
             </Card>
         </div>
