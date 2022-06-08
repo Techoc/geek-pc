@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     Card,
     Breadcrumb,
@@ -108,6 +108,11 @@ const Article = () => {
         });
     };
 
+    let navigate = useNavigate();
+    let goPublish = (data: any) => {
+        navigate("/publish?id=" + data.id);
+    };
+
     const columns = [
         {
             title: "封面",
@@ -159,6 +164,7 @@ const Article = () => {
                             type="primary"
                             shape="circle"
                             icon={<EditOutlined />}
+                            onClick={() => goPublish(data)}
                         />
                         <Popconfirm
                             title="确认删除该条文章吗?"
