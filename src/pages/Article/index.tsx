@@ -62,6 +62,29 @@ const Article = () => {
 
     let onFinish = (values: any) => {
         console.log(values);
+        let { status, channel_id, date } = values;
+        //数据处理
+        let _params = {
+            status: undefined,
+            channel_id: undefined,
+            begin_pubdate: undefined,
+            end_pubdate: undefined,
+        };
+        if (status !== -1) {
+            _params.status = status;
+        }
+        if (channel_id !== undefined) {
+            _params.channel_id = channel_id;
+        }
+        if (date) {
+            _params.begin_pubdate = date[0].format("YYYY-MM-DD");
+            _params.end_pubdate = date[1].format("YYYY-MM-DD");
+        }
+        //修改params数据 引起接口重新发送
+        setParams({
+            ...params,
+            ..._params,
+        });
     };
 
     const columns = [
