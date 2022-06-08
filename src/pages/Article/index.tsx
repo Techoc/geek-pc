@@ -10,6 +10,8 @@ import {
     Table,
     Space,
     Tag,
+    Popconfirm,
+    message,
 } from "antd";
 // 引入dist下的locale
 import "moment/dist/locale/zh-cn";
@@ -49,7 +51,6 @@ const Article = () => {
     useEffect(() => {
         let loadList = async () => {
             let res = await http.get("/mp/articles", { params });
-            console.log(res);
             // @ts-ignore
             let { results, total_count } = res.data;
             setArticleDate({
@@ -61,7 +62,6 @@ const Article = () => {
     }, [params]);
 
     let onFinish = (values: any) => {
-        console.log(values);
         let { status, channel_id, date } = values;
         //数据处理
         let _params = {
@@ -93,6 +93,21 @@ const Article = () => {
             page,
         });
     };
+
+    let delArticle = async (data: any) => {
+        let res = await http.delete(`/mp/articles/${data.id}`);
+        if (res.status === 200) {
+            message.success("删除成功");
+        } else {
+            message.error("删除失败");
+        }
+        // 更新列表
+        setParams({
+            page: 1,
+            per_page: 10,
+        });
+    };
+
     const columns = [
         {
             title: "封面",
@@ -145,12 +160,19 @@ const Article = () => {
                             shape="circle"
                             icon={<EditOutlined />}
                         />
-                        <Button
-                            type="primary"
-                            danger
-                            shape="circle"
-                            icon={<DeleteOutlined />}
-                        />
+                        <Popconfirm
+                            title="确认删除该条文章吗?"
+                            onConfirm={() => delArticle(data)}
+                            okText="确认"
+                            cancelText="取消"
+                        >
+                            <Button
+                                type="primary"
+                                danger
+                                shape="circle"
+                                icon={<DeleteOutlined />}
+                            />
+                        </Popconfirm>
                     </Space>
                 );
             },
@@ -216,7 +238,7 @@ const Article = () => {
                     columns={columns}
                     dataSource={articleDate.list}
                     pagination={{
-                        position: ['bottomCenter'],
+                        position: ["bottomCenter"],
                         pageSize: params.per_page,
                         total: articleDate.count,
                         onChange: pageChange,
