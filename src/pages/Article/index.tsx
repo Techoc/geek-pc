@@ -20,22 +20,14 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import img404 from "@/assets/error.png";
 import { useEffect, useState } from "react";
 import { http } from "@/utils";
+import { useStore } from "@/store";
+import { observer } from "mobx-react-lite";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const Article = () => {
-    //频道列表管理
-    let [channelList, setChannelList] = useState([]);
-    let loadChannelList = async () => {
-        let res = await http.get("/channels");
-        setChannelList(res.data.channels);
-    };
-
-    useEffect(() => {
-        loadChannelList().then();
-    }, []);
-
+    let { channelStore } = useStore();
     //文章列表管理 统一管理数据 将来修改给setList传对象
     let [articleDate, setArticleDate] = useState({
         list: [],
@@ -214,7 +206,7 @@ const Article = () => {
                             placeholder="请选择文章频道"
                             style={{ width: 120 }}
                         >
-                            {channelList.map((item: any) => (
+                            {channelStore.channelList.map((item: any) => (
                                 <Option value={item.id} key={item.id}>
                                     {item.name}
                                 </Option>
@@ -255,4 +247,4 @@ const Article = () => {
     );
 };
 
-export default Article;
+export default observer(Article);

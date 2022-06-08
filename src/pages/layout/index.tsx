@@ -15,10 +15,11 @@ const { Header, Sider } = Layout;
 
 const GeekLayout = () => {
     let { pathname } = useLocation();
-    let { userStore, loginStore } = useStore();
+    let { userStore, loginStore, channelStore } = useStore();
     useEffect(() => {
-        userStore.getUserInfo();
-    }, [userStore]);
+        userStore.getUserInfo().then();
+        channelStore.loadChannelList().then();
+    }, [userStore, channelStore]);
 
     //确定退出
     let navigate = useNavigate();

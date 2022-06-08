@@ -14,10 +14,13 @@ import { Link } from "react-router-dom";
 import "./index.scss";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
+import { useStore } from "@/store";
+import { observer } from "mobx-react-lite";
 
 const { Option } = Select;
 
 const Publish = () => {
+    let { channelStore } = useStore();
     return (
         <div className="publish">
             <Card
@@ -54,7 +57,11 @@ const Publish = () => {
                             placeholder="请选择文章频道"
                             style={{ width: 400 }}
                         >
-                            <Option value={0}>推荐</Option>
+                            {channelStore.channelList.map((item: any) => (
+                                <Option value={item.id} key={item.id}>
+                                    {item.name}
+                                </Option>
+                            ))}
                         </Select>
                     </Form.Item>
 
@@ -102,4 +109,4 @@ const Publish = () => {
     );
 };
 
-export default Publish;
+export default observer(Publish);
