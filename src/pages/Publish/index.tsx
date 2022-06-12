@@ -16,11 +16,20 @@ import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useStore } from "@/store";
 import { observer } from "mobx-react-lite";
+import { useState } from "react";
 
 const { Option } = Select;
 
 const Publish = () => {
     let { channelStore } = useStore();
+    //存放上传文件的列表
+    let [fileList, setFileList] = useState([]);
+
+    let onUploadChange = ({ fileList }: any) => {
+        console.log(fileList);
+        setFileList(fileList);
+    };
+
     return (
         <div className="publish">
             <Card
@@ -78,6 +87,9 @@ const Publish = () => {
                             listType="picture-card"
                             className="avatar-uploader"
                             showUploadList
+                            action="http://geek.itheima.net/v1_0/upload"
+                            fileList={fileList}
+                            onChange={onUploadChange}
                         >
                             <div style={{ marginTop: 8 }}>
                                 <PlusOutlined />
