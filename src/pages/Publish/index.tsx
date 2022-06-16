@@ -8,6 +8,7 @@ import {
     Upload,
     Space,
     Select,
+    message,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -17,6 +18,7 @@ import ReactQuill from "react-quill";
 import { useStore } from "@/store";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+import { http } from "@/utils";
 
 const { Option } = Select;
 
@@ -38,6 +40,23 @@ const Publish = () => {
         setImgCount(count);
     };
 
+    let onFinish = async (values: any) => {
+        console.log(values);
+        let { channel_id, content, title, type } = values;
+        let params = {
+            channel_id,
+            content,
+            title,
+            type,
+            cover: {
+                type: type,
+                images: fileList.map((item) => item.response.data.url),
+            },
+        };
+        await http.post("/mp/articles?draft=false", params);
+        message.success("添加文章成功");
+    };
+
     return (
         <div className="publish">
             <Card
@@ -54,6 +73,7 @@ const Publish = () => {
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     initialValues={{ type: 1, content: "请输入文章内容" }}
+                    onFinish={onFinish}
                 >
                     <Form.Item
                         label="标题"
