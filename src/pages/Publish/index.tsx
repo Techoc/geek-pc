@@ -17,7 +17,7 @@ import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useStore } from "@/store";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { http } from "@/utils";
 
 const { Option } = Select;
@@ -30,18 +30,29 @@ const Publish = () => {
     let onUploadChange = ({ fileList }: any) => {
         console.log(fileList);
         setFileList(fileList);
+        cacheImageList.current = fileList;
     };
 
+    //使用useRef声明一个暂存仓库
+    let cacheImageList = useRef([]);
     //切换图片
     let [imgCount, setImgCount] = useState(1);
 
     let radioChange = (e: any) => {
-        const count = e.target.value;
+        let count = e.target.value;
         setImgCount(count);
+
+        if (count === 1) {
+            // 单图，只展示第一张
+            const firstImg = cacheImageList.current[0];
+            setFileList(!firstImg ? [] : [firstImg]);
+        } else if (count === 3) {
+            // 三图，展示所有图片
+            setFileList(cacheImageList.current);
+        }
     };
 
     let onFinish = async (values: any) => {
-        console.log(values);
         let { channel_id, content, title, type } = values;
         let params = {
             channel_id,
