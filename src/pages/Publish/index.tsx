@@ -1,17 +1,17 @@
 import {
-    Card,
     Breadcrumb,
-    Form,
     Button,
-    Radio,
+    Card,
+    Form,
     Input,
-    Upload,
-    Space,
-    Select,
     message,
+    Radio,
+    Select,
+    Space,
+    Upload,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "./index.scss";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
@@ -68,6 +68,12 @@ const Publish = () => {
         message.success("添加文章成功");
     };
 
+    //编辑功能
+    //文案适配 路由参数id 判断条件
+    let [params] = useSearchParams();
+    let id = params.get("id");
+    console.log(id);
+
     return (
         <div className="publish">
             <Card
@@ -76,7 +82,9 @@ const Publish = () => {
                         <Breadcrumb.Item>
                             <Link to="/home">首页</Link>
                         </Breadcrumb.Item>
-                        <Breadcrumb.Item>发布文章</Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                            {id ? "编辑文章" : "发布文章"}
+                        </Breadcrumb.Item>
                     </Breadcrumb>
                 }
             >
@@ -154,7 +162,7 @@ const Publish = () => {
                                 type="primary"
                                 htmlType="submit"
                             >
-                                发布文章
+                                {id ? "更新文章" : "发布文章"}
                             </Button>
                         </Space>
                     </Form.Item>
