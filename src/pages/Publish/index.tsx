@@ -30,6 +30,7 @@ const Publish = () => {
         setFileList(fileList);
     };
 
+    //切换图片
     let [imgCount, setImgCount] = useState(1);
 
     let radioChange = (e: any) => {
@@ -98,6 +99,8 @@ const Publish = () => {
                                 action="http://geek.itheima.net/v1_0/upload"
                                 fileList={fileList}
                                 onChange={onUploadChange}
+                                multiple={imgCount > 1}
+                                maxCount={imgCount}
                             >
                                 <div style={{ marginTop: 8 }}>
                                     <PlusOutlined />
