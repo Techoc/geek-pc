@@ -17,7 +17,7 @@ import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useStore } from "@/store";
 import { observer } from "mobx-react-lite";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { http } from "@/utils";
 
 const { Option } = Select;
@@ -61,6 +61,7 @@ const Publish = () => {
             type,
             cover: {
                 type: type,
+                // @ts-ignore
                 images: fileList.map((item) => item.response.data.url),
             },
         };
@@ -72,7 +73,25 @@ const Publish = () => {
     //文案适配 路由参数id 判断条件
     let [params] = useSearchParams();
     let id = params.get("id");
-    console.log(id);
+    //数据回填 id调用接口 1.表单回填 2.暂存列表 3.upload组件fileList
+    let form: any = useRef(null);
+    useEffect(() => {
+        async function getArticle() {
+            let res = await http.get(`/mp/articles/${id}`);
+            let { cover, ...formValue } = res.data;
+            form.current.setFieldsValue({ ...formValue, type: cover.type });
+            //调用setFileList方法回填upload
+            let formatImageList = res.data.cover.images.map((url) => ({ url }));
+            setFileList(formatImageList);
+            //暂存列表
+            cacheImageList.current = formatImageList;
+        }
+
+        if (id) {
+            // 拉取数据回显
+            getArticle().then();
+        }
+    }, [id]);
 
     return (
         <div className="publish">
@@ -93,6 +112,7 @@ const Publish = () => {
                     wrapperCol={{ span: 16 }}
                     initialValues={{ type: 1, content: "请输入文章内容" }}
                     onFinish={onFinish}
+                    ref={form}
                 >
                     <Form.Item
                         label="标题"
