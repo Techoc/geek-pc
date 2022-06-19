@@ -65,7 +65,11 @@ const Publish = () => {
                 images: fileList.map((item) => item.response.data.url),
             },
         };
-        await http.post("/mp/articles?draft=false", params);
+        if (id) {
+            await http.put(`/mp/articles/${id}?draft=false`, params);
+        } else {
+            await http.post("/mp/articles?draft=false", params);
+        }
         message.success("添加文章成功");
     };
 
@@ -81,7 +85,9 @@ const Publish = () => {
             let { cover, ...formValue } = res.data;
             form.current.setFieldsValue({ ...formValue, type: cover.type });
             //调用setFileList方法回填upload
-            let formatImageList = res.data.cover.images.map((url) => ({ url }));
+            let formatImageList = res.data.cover.images.map((url: string) => ({
+                url,
+            }));
             setFileList(formatImageList);
             //暂存列表
             cacheImageList.current = formatImageList;
