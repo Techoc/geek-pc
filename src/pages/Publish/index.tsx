@@ -28,7 +28,14 @@ const Publish = () => {
     let [fileList, setFileList] = useState([]);
 
     let onUploadChange = ({ fileList }: any) => {
-        console.log(fileList);
+        let formatImageList = fileList.map((file: any) => {
+            if (file.response) {
+                return {
+                    url: file.response.data.url,
+                };
+            }
+            return file;
+        });
         setFileList(fileList);
         cacheImageList.current = fileList;
     };
@@ -62,7 +69,7 @@ const Publish = () => {
             cover: {
                 type: type,
                 // @ts-ignore
-                images: fileList.map((item) => item.response.data.url),
+                images: fileList.map((item) => item.url),
             },
         };
         if (id) {
